@@ -5,10 +5,12 @@ public class ItemSlot
 {
     public ItemBase Item;
     public int Amount;
+    public int Value;
 
     public ItemSlot(ItemBase item)
     {
         Item = item;
+        Value = item.Value;
         Amount = 1;
     }
 

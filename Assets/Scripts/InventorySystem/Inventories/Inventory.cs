@@ -50,6 +50,11 @@ public class Inventory : ScriptableObject
         Slots.Remove(slot);
     }
 
+    public void ClearInventory()
+    {
+        Slots.Clear();
+    }
+
     private ItemSlot GetSlot(ItemBase item)
     {
         for (int i = 0; i < Slots.Count; i++)

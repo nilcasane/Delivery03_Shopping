@@ -15,49 +15,55 @@ MonoBehaviour:
   Slots:
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 34
+  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
+    Amount: 1
+    Value: 31
+  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
+    Amount: 1
+    Value: 38
   - Item: {fileID: 11400000, guid: 49acabc26ae02f148bc9b247580668e3, type: 2}
-    Amount: 5
+    Amount: 7
+    Value: 12
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 48
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 35
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 45
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 37
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 37
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 35
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 41
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 36
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 37
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 41
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 30
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 34
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 34
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
+    Value: 34

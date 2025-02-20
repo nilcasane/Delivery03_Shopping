@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // NOTE: Inventory UI slots support drag&drop,
     // implementing the Unity provided interfaces by events system
@@ -12,6 +12,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public Image Image;
     public TextMeshProUGUI AmountText;
     public TextMeshProUGUI ValueText;
+    public TextMeshProUGUI TitleText;
+    public TextMeshProUGUI DescriptionText;
+    public RectTransform Description;
 
     private Canvas _canvas;
     private GraphicRaycaster _raycaster;
@@ -29,7 +32,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         AmountText.text = slot.Amount.ToString();
         AmountText.enabled = slot.Amount > 1;
 
-        ValueText.text = _item.Price.ToString();
+        ValueText.text = slot.Value.ToString();
+
+        TitleText.text = _item.Name.ToString();
+        DescriptionText.text = _item.Description.ToString();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -65,7 +71,11 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         // Find scene objects colliding with mouse point on end dragging
         RaycastHit2D hitData = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-
+        var hitComp = hitData.collider?.GetComponent<InventoryUI>().Inventory;
+        if (hitComp != null)
+        {
+            hitComp.AddItem(_item);
+        }
         if (hitData)
         {
             Debug.Log("Drop over object: " + hitData.collider.gameObject.name);
@@ -85,5 +95,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         // And centering item position
         transform.localPosition = Vector3.zero;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Description.gameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Description.gameObject.SetActive(false);
     }
 }

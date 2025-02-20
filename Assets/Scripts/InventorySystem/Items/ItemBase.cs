@@ -5,7 +5,9 @@ public class ItemBase : ScriptableObject
 {
     public string Name;
     public string Description;
-    public int Price;
-    public bool IsStackeable;
     public Sprite Image;
+    public bool IsStackeable;
+    public int Value;
+    public int MinPrice;
+    public int MaxPrice;
 }
