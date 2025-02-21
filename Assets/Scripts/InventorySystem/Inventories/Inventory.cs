@@ -80,4 +80,18 @@ public class Inventory : ScriptableObject
     {
         return Slots[i];
     }
+
+    public void BuyItem(ItemBase item)
+    {
+        if (Player.Money >= item.Value)
+        {
+            Player.OnMoneyUpdated?.Invoke(-item.Value);
+            RemoveItem(item);
+        }
+    }
+
+    public void SellItem(ItemBase item)
+    {
+
+    }
 }
