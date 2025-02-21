@@ -15,7 +15,15 @@ MonoBehaviour:
   Slots:
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 0
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 0
   - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
     Amount: 1
+    Value: 0
+  - Item: {fileID: 11400000, guid: 49acabc26ae02f148bc9b247580668e3, type: 2}
+    Amount: 1
+    Value: 0
+  Type: 0
+  Hola: 0

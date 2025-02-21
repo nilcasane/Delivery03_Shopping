@@ -21,7 +21,6 @@ public class InventoryRandomizer : MonoBehaviour
 
     private void Reroll()
     {
-        Debug.Log("Rerolling!!");
         if (Inventory == null || Items == null) return;
 
         Inventory.ClearInventory();

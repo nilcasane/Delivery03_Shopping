@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // NOTE: Inventory UI slots support drag&drop,
     // implementing the Unity provided interfaces by events system
@@ -15,27 +16,66 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public TextMeshProUGUI TitleText;
     public TextMeshProUGUI DescriptionText;
     public RectTransform Description;
+    public RectTransform SelectedCursor;
+
+    public bool IsItemSelected;
 
     private Canvas _canvas;
     private GraphicRaycaster _raycaster;
     private Transform _parent;
-    private ItemBase _item;
-    private InventoryUI _inventory;
+
+    public ItemBase Item { get; private set;}
+    public InventoryUI InventoryUI { get; private set;}
+
+    public static Action<InventorySlotUI> OnItemSelected;
 
     public void Initialize(ItemSlot slot, InventoryUI inventory)
     {
-        _item = slot.Item;
-        _inventory = inventory;
+        _parent = GetComponent<RectTransform>();
+        IsItemSelected = false;
 
-        Image.sprite = _item.Image;
+        Item = slot.Item;
+        InventoryUI = inventory;
+
+        Image.sprite = Item.Image;
 
         AmountText.text = slot.Amount.ToString();
         AmountText.enabled = slot.Amount > 1;
 
         ValueText.text = slot.Value.ToString();
 
-        TitleText.text = _item.Name.ToString();
-        DescriptionText.text = _item.Description.ToString();
+        TitleText.text = Item.Name.ToString();
+        DescriptionText.text = Item.Description.ToString();
+    }
+
+    private void OnEnable()
+    {
+        Player.OnResetSelectedItems += ResetCursor;
+    }
+
+    private void OnDisable()
+    {
+        Player.OnResetSelectedItems -= ResetCursor;
+    }
+
+    private void ResetCursor()
+    {
+        SelectedCursor.gameObject.SetActive(Player.SelectedItem == gameObject); 
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Description.gameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Description.gameObject.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Player.OnSelectedItem?.Invoke(gameObject);
+        OnItemSelected?.Invoke(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -57,7 +97,6 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         // And set it as last child to be rendered on top of UI
         transform.SetAsLastSibling();
-        Debug.Log("Item dragging: "+_item);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -74,19 +113,19 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         var hitComp = hitData.collider?.GetComponent<InventoryUI>().Inventory;
         if (hitComp != null)
         {
-            hitComp.AddItem(_item);
+            hitComp.AddItem(Item);
         }
         if (hitData)
         {
             Debug.Log("Drop over object: " + hitData.collider.gameObject.name);
 
             var consumer = hitData.collider.GetComponent<IConsume>();
-            bool consumable = _item is ConsumableItem;
+            bool consumable = Item is ConsumableItem;
 
             if ((consumer != null) && consumable)
             {
-                (_item as ConsumableItem).Use(consumer);
-                _inventory.UseItem(_item);
+                (Item as ConsumableItem).Use(consumer);
+                InventoryUI.UseItem(Item);
             }
         }
 
@@ -95,15 +134,5 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         // And centering item position
         transform.localPosition = Vector3.zero;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Description.gameObject.SetActive(true);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        Description.gameObject.SetActive(false);
     }
 }

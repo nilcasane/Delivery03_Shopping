@@ -6,7 +6,11 @@ public class Player : MonoBehaviour
 {
     public static int Money = 1000;
     public static int MaxHealth = 100;
-    public int Health;
+    public int Health = 100;
+
+    public static GameObject SelectedItem;
+    public static Action<GameObject> OnSelectedItem;
+    public static Action OnResetSelectedItems;
 
     public static Action<int> OnHealthChange;
     public static Action<int> OnHealthUpdated;
@@ -25,12 +29,14 @@ public class Player : MonoBehaviour
     {
         OnHealthChange += UpdateHealth;
         OnMoneyChange += UpdateMoney;
+        OnSelectedItem += UpdateSelectedItem;
     }
 
     private void OnDisable()
     {
         OnHealthChange -= UpdateHealth;
         OnMoneyChange -= UpdateMoney;
+        OnSelectedItem -= UpdateSelectedItem;
     }
 
     private void UpdateHealth(int value)
@@ -56,4 +62,11 @@ public class Player : MonoBehaviour
             OnMoneyUpdated?.Invoke(Money);
         }
     }
+
+    private void UpdateSelectedItem(GameObject item)
+    {
+        SelectedItem = item;
+        OnResetSelectedItems?.Invoke();
+    }
+
 }

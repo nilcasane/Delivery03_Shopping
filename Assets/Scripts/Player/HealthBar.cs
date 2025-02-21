@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour, IPointerClickHandler
     {
         Player.OnHealthUpdated += SetValue;
     }
-    private void OnDisnable()
+    private void OnDisable()
     {
         Player.OnHealthUpdated -= SetValue;
     }

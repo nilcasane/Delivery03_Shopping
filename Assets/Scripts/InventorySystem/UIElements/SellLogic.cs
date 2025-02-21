@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyLogic : MonoBehaviour
+public class SellLogic : MonoBehaviour
 {
     private Button _button;
     private void OnEnable()
@@ -20,6 +20,6 @@ public class BuyLogic : MonoBehaviour
     void CheckItemType(InventorySlotUI itemSlot)
     {
         var Inventory = itemSlot.InventoryUI.Inventory;
-        _button.interactable = (Inventory.Type == InventoryType.Shop);
+        _button.interactable = (Inventory.Type == InventoryType.Player);
     }
 }
