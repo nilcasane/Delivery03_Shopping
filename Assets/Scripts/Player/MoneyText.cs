@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class MoneyText : MonoBehaviour
 {
-    private TextMeshProUGUI text;
+    public TextMeshProUGUI Label;
     private void Start()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        Label.text = Player.Instance.Money.ToString();
     }
     private void OnEnable()
     {
@@ -20,6 +20,6 @@ public class MoneyText : MonoBehaviour
 
     private void MoneyChange(int Money)
     {
-        text.text = Money.ToString();
+        Label.text = Money.ToString();
     }
 }

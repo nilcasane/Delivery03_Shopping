@@ -27,14 +27,17 @@ public class HealthBar : MonoBehaviour, IPointerClickHandler
 
     public void SetValue(int Health)
     {
-        float fractionHealth = Health / (Player.MaxHealth * 1f);
-        slider.value = fractionHealth;
-        FillImage.color = ColorGradient.Evaluate(fractionHealth);
-        slider.gameObject.SetActive(true);
+        if (slider != null)
+        {
+            float fractionHealth = Health / (Player.MaxHealth * 1f);
+            slider.value = fractionHealth;
+            FillImage.color = ColorGradient.Evaluate(fractionHealth);
+            slider.gameObject.SetActive(true);
+        }
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        Player.OnHealthChange?.Invoke(-10);
+        Player.OnChangeHealth?.Invoke(-10);
     }
 }

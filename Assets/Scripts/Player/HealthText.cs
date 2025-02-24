@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class HealthText : MonoBehaviour
 {
-    private TextMeshProUGUI text;
+    public TextMeshProUGUI Label;
+
     private void Start()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        Label.text = Player.Instance.Health.ToString();
     }
     private void OnEnable()
     {
@@ -20,6 +21,6 @@ public class HealthText : MonoBehaviour
 
     private void HealthChange(int Health)
     {
-        text.text = Health.ToString();
+        Label.text = Health.ToString();
     }
 }
