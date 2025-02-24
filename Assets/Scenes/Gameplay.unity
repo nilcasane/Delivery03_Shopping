@@ -131,9 +131,10 @@ GameObject:
   - component: {fileID: 44048510}
   - component: {fileID: 44048509}
   - component: {fileID: 44048511}
-  - component: {fileID: 44048513}
-  - component: {fileID: 44048512}
   - component: {fileID: 44048514}
+  - component: {fileID: 44048512}
+  - component: {fileID: 44048513}
+  - component: {fileID: 44048515}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -268,6 +269,20 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &44048515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44048507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ab1a693e788a0419d1c7f1ae9b726e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopInventory: {fileID: 11400000, guid: 75a86443534ecd846b49165f56b8b394, type: 2}
+  playerInventory: {fileID: 11400000, guid: bc6c2e0de96e74144af3755a085d8383, type: 2}
 --- !u!1 &85844104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,7 +1633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.1249998, y: 10.443821}
+  m_AnchoredPosition: {x: 2.1249998, y: 1}
   m_SizeDelta: {x: 804.25, y: 452.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1112431367

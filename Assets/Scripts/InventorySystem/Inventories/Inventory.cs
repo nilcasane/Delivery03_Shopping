@@ -11,19 +11,15 @@ public enum InventoryType
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class Inventory : ScriptableObject
 {
-    [SerializeField]
-    List<ItemSlot> Slots;
+    [SerializeField] List<ItemSlot> Slots;
+    [SerializeField] private int maximumSlots = 24;
+    [SerializeField] public InventoryType Type;
+    
     public int Length => Slots.Count;
-
-    [SerializeField]
-    public InventoryType Type;
-
-    [SerializeField]
-    int Hola;
 
     public Action OnInventoryChange;
 
-    public void AddItem(ItemBase item)
+    public bool AddItem(ItemBase item)
     {
         if (Slots == null) Slots = new List<ItemSlot>();
 
@@ -32,29 +28,34 @@ public class Inventory : ScriptableObject
         if ((slot!=null) && (item.IsStackeable))
         {
             slot.AddOne();
+            OnInventoryChange?.Invoke();
+            return true;
         }
-        else
+        else if (Slots.Count != maximumSlots)
         {
             slot = new ItemSlot(item);
             Slots.Add(slot);
+            OnInventoryChange?.Invoke();
+            return true;
         }
-
-        OnInventoryChange?.Invoke();
+        return false;
     }
 
-    public void RemoveItem(ItemBase item)
+    public bool RemoveItem(ItemBase item)
     {
-        if (Slots == null) return;
-
-        var slot = GetSlot(item);
-
-        if (slot != null)
+        if (Slots != null)
         {
-            slot.RemoveOne();
-            if (slot.IsEmpty()) RemoveSlot(slot);
-        }
+            var slot = GetSlot(item);
 
-        OnInventoryChange?.Invoke();
+            if (slot != null)
+            {
+                slot.RemoveOne();
+                if (slot.IsEmpty()) RemoveSlot(slot);
+                OnInventoryChange?.Invoke();
+                return true;
+            }
+        }
+        return false;
     }
 
     private void RemoveSlot(ItemSlot slot)
@@ -79,19 +80,5 @@ public class Inventory : ScriptableObject
     public ItemSlot GetSlot(int i)
     {
         return Slots[i];
-    }
-
-    public void BuyItem(ItemBase item)
-    {
-        if (Player.Money >= item.Value)
-        {
-            Player.OnMoneyUpdated?.Invoke(-item.Value);
-            RemoveItem(item);
-        }
-    }
-
-    public void SellItem(ItemBase item)
-    {
-
     }
 }
