@@ -11,9 +11,9 @@ public enum InventoryType
 [CreateAssetMenu(fileName = "NewInventory", menuName = "Inventory System/Inventory")]
 public class Inventory : ScriptableObject
 {
-    [SerializeField] List<ItemSlot> Slots;
-    [SerializeField] private int maximumSlots = 24;
     [SerializeField] public InventoryType Type;
+    List<ItemSlot> Slots;
+    private int maximumSlots = 18;
     
     public int Length => Slots.Count;
 

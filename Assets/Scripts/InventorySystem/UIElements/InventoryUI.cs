@@ -32,12 +32,15 @@ public class InventoryUI : MonoBehaviour
 
     private void ClearInventory()
     {
-        foreach (var item in _shownObjects)
+        if (_shownObjects != null)
         {
-            if (item) Destroy(item);
-        }
+            foreach (var item in _shownObjects)
+            {
+                if (item) Destroy(item);
+            }
 
-        _shownObjects.Clear();
+            _shownObjects.Clear();
+        }
     }
 
     private void FillInventory(Inventory inventory)

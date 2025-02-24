@@ -1,43 +1,101 @@
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IConsume
 {
     public static InventoryManager Instance; // Singleton
     [SerializeField]
     public Inventory shopInventory;
     [SerializeField]
     public Inventory playerInventory;
-    private int playerCoins;
+
+    public ItemBase[] PlayerItems;
+    public ItemBase[] ShopItems;
 
     private void Awake()
     {
         Instance = this;
     }
+
+    private void OnEnable()
+    {
+        RerollLogic.OnInventoryReroll += RandomizeShop;
+    }
+
+    private void OnDisable()
+    {
+        RerollLogic.OnInventoryReroll -= RandomizeShop;
+    }
+
+
     private void Start()
     {
-        playerCoins = Player.Money;
+        InitializePlayer();
+        InitializeShop();
     }
+
+    private void InitializePlayer()
+    {
+        playerInventory.ClearInventory();
+        for (int i = 0; i < PlayerItems.Length; i++)
+        {
+            playerInventory.AddItem(PlayerItems[i]);
+        }
+    }
+
+    private void InitializeShop()
+    {
+        shopInventory.ClearInventory();
+        RandomizeShop();
+    }
+
+    private void RandomizeShop()
+    {
+        shopInventory.ClearInventory();
+
+        int numberItems = Random.Range(18, 24);
+
+        for (int i = 0; i < numberItems; i++)
+        {
+            ItemBase actualItem = ShopItems[Random.Range(0, ShopItems.Length)];
+            if (actualItem != null)
+            {
+                actualItem.Value = Random.Range(actualItem.MinPrice, actualItem.MaxPrice);
+                shopInventory.AddItem(actualItem);
+            }
+        }
+    }
+
+
     public bool BuyItem(ItemBase item)
     {
-        if (playerCoins >= item.Value && playerInventory.AddItem(item))
+        if (Player.Instance.Money >= item.Value)
         {
-            playerCoins -= item.Value;
-            shopInventory.RemoveItem(item);
-            Player.OnMoneyUpdated(playerCoins);
-            return true;
+            if (playerInventory.AddItem(item))
+            {
+                shopInventory.RemoveItem(item);
+                Player.OnChangeMoney(-item.Value);
+                return true;
+            }
         }
         return false;
     }
 
-    public bool SellItem(ItemBase item)
+    public void SellItem(ItemBase item)
     {
-        if (shopInventory.AddItem(item))
+        playerInventory.RemoveItem(item);
+        Player.OnChangeMoney(item.Value);
+        if (playerInventory.Length == 0)
         {
-            playerCoins += item.Value;
-            playerInventory.RemoveItem(item);
-            Player.OnMoneyUpdated(playerCoins);
-            return true;
+            GameplayManager.OnPlayerLose?.Invoke();
         }
-        return false;
+    }
+
+    public void Use(ConsumableItem item)
+    {
+        if (item is ItemPotion potion)
+        {
+            playerInventory.RemoveItem(potion);
+            Player.OnChangeHealth(potion.HealthPoints);
+        }
     }
 }

@@ -10,10 +10,12 @@ public class BuyLogic : MonoBehaviour
     {
         InventorySlotUI.OnItemSelected += CheckItemType;
     }
+
     private void OnDisable()
     {
         InventorySlotUI.OnItemSelected -= CheckItemType;
     }
+
     void Start()
     {
         inventoryManager = InventoryManager.Instance;
