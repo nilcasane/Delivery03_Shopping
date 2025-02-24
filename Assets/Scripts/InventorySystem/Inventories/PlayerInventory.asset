@@ -12,27 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d41c4a7503c494da99b18f765d5505, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  Slots:
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 20
-  - Item: {fileID: 11400000, guid: 49acabc26ae02f148bc9b247580668e3, type: 2}
-    Amount: 5
-    Value: 20
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 48
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 48
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 48
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 48
-  - Item: {fileID: 11400000, guid: 033a2086211331a48976a87793fff010, type: 2}
-    Amount: 1
-    Value: 48
-  maximumSlots: 18
   Type: 0
