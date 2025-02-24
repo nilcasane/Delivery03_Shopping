@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d033fa2dfce234aa3be7fdd72acf12, type: 3}
+  m_Name: Gafas Molonas
+  m_EditorClassIdentifier: 
+  Name: Gafas Molonas
+  Description: Te hacen parecer un 50% mas guay
+  Image: {fileID: -4199746690565679428, guid: 829cf6f9cc636ac4ca639a1278130d55, type: 3}
+  IsStackeable: 0
+  Value: 702
+  MinPrice: 400
+  MaxPrice: 800
+  Type: 0

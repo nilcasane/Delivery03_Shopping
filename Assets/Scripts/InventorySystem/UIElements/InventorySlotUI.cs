@@ -29,6 +29,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public static Action<InventorySlotUI> OnItemSelected;
 
+    [HideInInspector] public Transform parentAfterDrag;
+
     public void Initialize(ItemSlot slot, InventoryUI inventory)
     {
         _parent = GetComponent<RectTransform>();
@@ -97,6 +99,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
         // And set it as last child to be rendered on top of UI
         transform.SetAsLastSibling();
+
+        Image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -108,6 +112,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log("Objeto soltado");
         // Find scene objects colliding with mouse point on end dragging
         RaycastHit2D hitData = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
         var hitComp = hitData.collider?.GetComponent<InventoryUI>().Inventory;
@@ -126,6 +131,11 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             {
                 (Item as ConsumableItem).Use(consumer);
                 InventoryUI.UseItem(Item);
+            }
+            else
+            {
+                transform.SetParent(_parent);
+                Image.raycastTarget = true;
             }
         }
 

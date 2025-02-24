@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083b1f7dbe776db42a5bdac087d42622, type: 3}
+  m_Name: CubiBaya
+  m_EditorClassIdentifier: 
+  Name: CubiBaya
+  Description: Baya de forma cuadrada muy saciante
+  Image: {fileID: -8124528061606188255, guid: 829cf6f9cc636ac4ca639a1278130d55, type: 3}
+  IsStackeable: 1
+  Value: 30
+  MinPrice: 25
+  MaxPrice: 50
+  healthPoints: 25
