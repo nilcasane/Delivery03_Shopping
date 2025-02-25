@@ -112,30 +112,34 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("Objeto soltado");
-        // Find scene objects colliding with mouse point on end dragging
-        RaycastHit2D hitData = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-        var hitComp = hitData.collider?.GetComponent<InventoryUI>().Inventory;
-        if (hitComp != null)
-        {
-            hitComp.AddItem(Item);
-        }
-        if (hitData)
-        {
-            Debug.Log("Drop over object: " + hitData.collider.gameObject.name);
+        // Use GraphicRaycaster for collision detections with the UI
+        List<RaycastResult> results = new List<RaycastResult>();
+        _raycaster.Raycast(eventData, results);
 
-            var consumer = hitData.collider.GetComponent<IConsume>();
-            bool consumable = Item is ConsumableItem;
+        InventoryUI targetInventoryUI = null;
 
-            if ((consumer != null) && consumable)
+        foreach (var result in results)
+        {
+            targetInventoryUI = result.gameObject.GetComponent<InventoryUI>();
+            if (targetInventoryUI != null)
             {
-                (Item as ConsumableItem).Use(consumer);
-                InventoryUI.UseItem(Item);
+                break;
             }
-            else
+        }
+
+        if (targetInventoryUI != null)
+        {
+            var targetInventory = targetInventoryUI.Inventory;
+
+            if (InventoryUI.Inventory.Type == InventoryType.Player && targetInventory.Type == InventoryType.Shop)
             {
-                transform.SetParent(_parent);
-                Image.raycastTarget = true;
+                // Buy item
+                InventoryManager.Instance.SellItem(Item);
+            }
+            else if (InventoryUI.Inventory.Type == InventoryType.Shop && targetInventory.Type == InventoryType.Player)
+            {
+                // Sell item
+                InventoryManager.Instance.BuyItem(Item);
             }
         }
 
@@ -144,5 +148,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
         // And centering item position
         transform.localPosition = Vector3.zero;
+
+        Image.raycastTarget = true;
     }
 }

@@ -61,6 +61,13 @@ public class InventoryUI : MonoBehaviour
         // Add a new visual slot UI in inventory UI, using provided prefab
         var element = GameObject.Instantiate(SlotPrefab, Vector3.zero, Quaternion.identity, transform);
 
+        // Ajustar la posición Z a 0
+        var rectTransform = element.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, rectTransform.localPosition.y, 0);
+        }
+
         element.Initialize(inventorySlot, this);
 
         return element.gameObject;
