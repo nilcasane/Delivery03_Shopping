@@ -1,23 +1,22 @@
-## Delivery 01 - $(Game Title)
+## Delivery 01 - $(Shopping game)
 
-![$(Game Title)](Screenshots/screenshot01.png "$(Game Title)")
+![$(Shopping game)](Screenshots/screenshot01.png "$(Shopping game)")
 
 ### Description
 
-$(Your Game Description)
+$(Compra objetos en una tienda y añadelos a tu inventario para usarlos)
 
 ### Features
 
- - $(Game Feature 01)
- - $(Game Feature 02)
- - $(Game Feature 03)
+ - $(Vende)
+ - $(Compra)
+ - $(Usa)
 
 ### Controls
 
-Keyboard:
- - $(Game Control 01)
- - $(Game Control 02)
- - $(Game Control 03)
+Ratón:
+ - $(Boton Derecho)
+
 
 ### Screenshots
 
@@ -25,9 +24,10 @@ _TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Developers
 
- - $(Developer 01) - $(Role/Tasks Developed)
- - $(Developer 02) - $(Role/Tasks Developed)
- - $(Developer 03) - $(Role/Tasks Developed)
+ - $(Nil Casañé) - $(Role/Tasks Developed)
+ - $(Victor Madronas) - $(Role/Tasks Developed)
+ - $(Àlex Cordón) - $(Role/Tasks Developed)
+ - $(Gonzalo Querol) - $(Role/Tasks Developed)
 
 ### Links
 
