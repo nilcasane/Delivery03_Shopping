@@ -5,32 +5,44 @@ public class UseLogic : MonoBehaviour
 {
     private Button _button;
     private ConsumableItem consumableItem;
-    private ConsumeItem _consumeItem;
 
     private void OnEnable()
     {
-        InventorySlotUI.OnItemSelected += CheckItemType;
+        Player.OnSelectedItem += CheckItemType;
     }
     private void OnDisable()
     {
-        InventorySlotUI.OnItemSelected -= CheckItemType;
+        Player.OnSelectedItem -= CheckItemType;
     }
     private void Start()
     {
-        _consumeItem = GetComponent<ConsumeItem>();
         _button = GetComponent<Button>();
+        _button.interactable = false;
         _button.onClick.AddListener(OnButtonClicked);
     }
-    private void CheckItemType(InventorySlotUI itemSlot)
+    private void CheckItemType(GameObject selectedItem)
     {
-        consumableItem = itemSlot.Item as ConsumableItem;
-        _button.interactable = itemSlot.InventoryUI.Inventory.Type == InventoryType.Player && consumableItem != null;
+        if (selectedItem == null) _button.interactable = false;
+        else
+        {
+            var InventorySlotUI = selectedItem.GetComponent<InventorySlotUI>();
+            if (InventorySlotUI != null)
+            {
+                var InventoryUI = InventorySlotUI.InventoryUI;
+                consumableItem = InventorySlotUI.Item as ConsumableItem;
+                if (InventoryUI != null)
+                {
+                    var Inventory = InventoryUI.Inventory;
+                    _button.interactable = (Inventory.Type == InventoryType.Player && consumableItem != null);
+                }
+            }
+        }
     }
     private void OnButtonClicked()
     {
         if (consumableItem != null)
         {
-            InventoryManager.Instance.Use(consumableItem);
+            InventoryManager.OnUseItem?.Invoke(consumableItem);
         }
     }
 }

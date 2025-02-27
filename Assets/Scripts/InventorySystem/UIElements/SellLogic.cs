@@ -3,34 +3,46 @@ using UnityEngine.UI;
 
 public class SellLogic : MonoBehaviour
 {
-    private InventoryManager inventoryManager;
     private Button _button;
+
     private void OnEnable()
     {
-        InventorySlotUI.OnItemSelected += CheckItemType;
+        Player.OnSelectedItem += CheckItemType;
     }
     private void OnDisable()
     {
-        InventorySlotUI.OnItemSelected -= CheckItemType;
+        Player.OnSelectedItem -= CheckItemType;
     }
     void Start()
     {
-        inventoryManager = InventoryManager.Instance;
         _button = GetComponent<Button>();
+        _button.interactable = false;
         _button.onClick.AddListener(OnButtonClicked);
     }
 
-    void CheckItemType(InventorySlotUI itemSlot)
+    void CheckItemType(GameObject selectedItem)
     {
-        var Inventory = itemSlot.InventoryUI.Inventory;
-        _button.interactable = (Inventory.Type == InventoryType.Player);
+        if (selectedItem == null) _button.interactable = false;
+        else
+        {
+            var InventorySlotUI = selectedItem.GetComponent<InventorySlotUI>();
+            if (InventorySlotUI != null)
+            {
+                var InventoryUI = InventorySlotUI.InventoryUI;
+                if (InventoryUI != null)
+                {
+                    var Inventory = InventoryUI.Inventory;
+                    _button.interactable = (Inventory != null && Inventory.Type == InventoryType.Player);
+                }
+            }
+        }
     }
     void OnButtonClicked()
     {
         var selectedItem = Player.SelectedItem.GetComponent<InventorySlotUI>();
         if (selectedItem != null && _button.interactable)
         {
-            inventoryManager.SellItem(selectedItem.Item);
+            InventoryManager.OnSellItem?.Invoke(selectedItem.Item);
         }
     }
 }

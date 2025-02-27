@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class RerollLogic : MonoBehaviour
 {
-    public static Action OnInventoryReroll;
 
     public Button rerollButton;
 
@@ -14,6 +13,6 @@ public class RerollLogic : MonoBehaviour
     }
     private void OnRerollButtonClicked()
     {
-        OnInventoryReroll?.Invoke();
+        InventoryManager.OnInventoryReroll?.Invoke();
     }
 }
