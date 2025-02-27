@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Localizer : MonoBehaviour
