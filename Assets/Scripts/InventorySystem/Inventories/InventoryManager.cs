@@ -1,15 +1,24 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class InventoryManager : MonoBehaviour, IConsume
+public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance; // Singleton
-    [SerializeField]
-    public Inventory shopInventory;
-    [SerializeField]
-    public Inventory playerInventory;
+
+    [SerializeField] public Inventory shopInventory;
+    [SerializeField] public Inventory playerInventory;
 
     public ItemBase[] PlayerItems;
     public ItemBase[] ShopItems;
+
+    public static Action<ItemBase> OnBuyItem;
+    public static Action OnBuyInvalid;
+    public static Action<ItemBase> OnSellItem;
+    public static Action<ConsumableItem> OnUseItem;
+    public static Action OnInventoryReroll;
+
+    private int _rerollCost = 15;
 
     private void Awake()
     {
@@ -18,12 +27,18 @@ public class InventoryManager : MonoBehaviour, IConsume
 
     private void OnEnable()
     {
-        RerollLogic.OnInventoryReroll += RandomizeShop;
+        OnInventoryReroll += RerollShop;
+        OnBuyItem += BuyItem;
+        OnSellItem += SellItem;
+        OnUseItem += UseItem;
     }
 
     private void OnDisable()
     {
-        RerollLogic.OnInventoryReroll -= RandomizeShop;
+        OnInventoryReroll -= RerollShop;
+        OnBuyItem -= BuyItem;
+        OnSellItem -= SellItem;
+        OnUseItem -= UseItem;
     }
 
 
@@ -36,6 +51,7 @@ public class InventoryManager : MonoBehaviour, IConsume
     private void InitializePlayer()
     {
         playerInventory.ClearInventory();
+
         for (int i = 0; i < PlayerItems.Length; i++)
         {
             playerInventory.AddItem(PlayerItems[i]);
@@ -59,43 +75,64 @@ public class InventoryManager : MonoBehaviour, IConsume
             ItemBase actualItem = ShopItems[Random.Range(0, ShopItems.Length)];
             if (actualItem != null)
             {
-                actualItem.Value = Random.Range(actualItem.MinPrice, actualItem.MaxPrice);
+                actualItem.Price = Random.Range(actualItem.MinPrice, actualItem.MaxPrice);
                 shopInventory.AddItem(actualItem);
             }
         }
     }
 
-
-    public bool BuyItem(ItemBase item)
+    private void BuyItem(ItemBase item)
     {
-        if (Player.Instance.Money >= item.Value)
+        if (Player.Instance.Money >= item.Price)
         {
-            if (playerInventory.AddItem(item))
+            if (playerInventory != null && playerInventory.AddItem(item))
             {
                 shopInventory.RemoveItem(item);
-                Player.OnChangeMoney(-item.Value);
-                return true;
+                Player.OnChangeMoney(-item.Price);
+                Player.OnSelectedItem?.Invoke(null);
+
+                if (Player.Instance.Money == 0)
+                {
+                    GameplayManager.OnPlayerLose?.Invoke();
+                }
             }
         }
-        return false;
+        else
+        {
+            OnBuyInvalid?.Invoke();
+        }
     }
 
-    public void SellItem(ItemBase item)
+    private void SellItem(ItemBase item)
     {
         playerInventory.RemoveItem(item);
         Player.OnChangeMoney(item.Value);
-        if (playerInventory.Length == 0)
+        Player.OnSelectedItem?.Invoke(null);
+
+        if (playerInventory != null && playerInventory.Length == 0)
         {
             GameplayManager.OnPlayerLose?.Invoke();
         }
     }
 
-    public void Use(ConsumableItem item)
+    private void UseItem(ConsumableItem item)
     {
-        if (item is ItemPotion potion)
+        Player.OnChangeHealth?.Invoke(item.HealthPoints);
+        playerInventory.RemoveItem(item);
+        Player.OnSelectedItem?.Invoke(null);
+
+        if (playerInventory != null && playerInventory.Length == 0)
         {
-            playerInventory.RemoveItem(potion);
-            Player.OnChangeHealth(potion.HealthPoints);
+            GameplayManager.OnPlayerLose?.Invoke();
+        }
+    }
+
+    private void RerollShop()
+    {
+        if (Player.Instance.Money >= _rerollCost)
+        {
+            RandomizeShop();
+            Player.OnChangeMoney(-_rerollCost);
         }
     }
 }

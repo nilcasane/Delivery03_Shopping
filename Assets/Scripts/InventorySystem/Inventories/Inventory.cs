@@ -12,10 +12,10 @@ public enum InventoryType
 public class Inventory : ScriptableObject
 {
     [SerializeField] public InventoryType Type;
-    List<ItemSlot> Slots;
-    private int maximumSlots = 18;
+    public List<ItemSlot> Slots;
+    public int maximumSlots = 18;
     
-    public int Length => Slots.Count;
+    public int Length => Mathf.Max(0, Slots.Count);
 
     public Action OnInventoryChange;
 

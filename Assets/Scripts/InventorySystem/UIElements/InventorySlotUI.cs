@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    // NOTE: Inventory UI slots support drag&drop,
-    // implementing the Unity provided interfaces by events system
-
     public Image Image;
     public TextMeshProUGUI AmountText;
     public TextMeshProUGUI ValueText;
@@ -27,10 +24,6 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     public ItemBase Item { get; private set;}
     public InventoryUI InventoryUI { get; private set;}
 
-    public static Action<InventorySlotUI> OnItemSelected;
-
-    [HideInInspector] public Transform parentAfterDrag;
-
     public void Initialize(ItemSlot slot, InventoryUI inventory)
     {
         _parent = GetComponent<RectTransform>();
@@ -44,7 +37,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
         AmountText.text = slot.Amount.ToString();
         AmountText.enabled = slot.Amount > 1;
 
-        ValueText.text = slot.Value.ToString();
+        if (InventoryUI.Inventory.Type is InventoryType.Shop) ValueText.text = Item.Price.ToString();
+        else ValueText.text = slot.Value.ToString();
 
         TitleText.text = Item.Name.ToString();
         DescriptionText.text = Item.Description.ToString();
@@ -52,17 +46,17 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     private void OnEnable()
     {
-        Player.OnResetSelectedItems += ResetCursor;
+        Player.OnSelectedItem += ResetCursor;
     }
 
     private void OnDisable()
     {
-        Player.OnResetSelectedItems -= ResetCursor;
+        Player.OnSelectedItem -= ResetCursor;
     }
 
-    private void ResetCursor()
+    private void ResetCursor(GameObject SelectedItem)
     {
-        SelectedCursor.gameObject.SetActive(Player.SelectedItem == gameObject); 
+        SelectedCursor.gameObject.SetActive(SelectedItem == gameObject); 
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -77,7 +71,6 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     public void OnPointerClick(PointerEventData eventData)
     {
         Player.OnSelectedItem?.Invoke(gameObject);
-        OnItemSelected?.Invoke(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -133,13 +126,13 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
             if (InventoryUI.Inventory.Type == InventoryType.Player && targetInventory.Type == InventoryType.Shop)
             {
-                // Buy item
-                InventoryManager.Instance.SellItem(Item);
+                // Sell item
+                InventoryManager.OnSellItem?.Invoke(Item);
             }
             else if (InventoryUI.Inventory.Type == InventoryType.Shop && targetInventory.Type == InventoryType.Player)
             {
-                // Sell item
-                InventoryManager.Instance.BuyItem(Item);
+                // Buy item
+                InventoryManager.OnBuyItem?.Invoke(Item);
             }
         }
 
