@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fec3f25ea6a52a549ad50217c8025331
+guid: 25c754a629dc02147a14cd1e8fdd9d40
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -687406289383032385
-    second: Caja pokemon v2_0
+      213: -844244714361066042
+    second: PokeGAME_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Caja pokemon v2_0
+      name: PokeGAME_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 182
-        height: 162
+        y: 2
+        width: 86
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb974f03f97d576f0800000000000000
-      internalID: -687406289383032385
+      spriteID: 6cde101c7e3a844f0800000000000000
+      internalID: -844244714361066042
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Caja pokemon v2_0: -687406289383032385
+      PokeGAME_0: -844244714361066042
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
