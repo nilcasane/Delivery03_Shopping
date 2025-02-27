@@ -16,7 +16,8 @@ MonoBehaviour:
   Description: Baya que tiene un simil, a cierto fruto ficticio
   Image: {fileID: 3295791903784372349, guid: 829cf6f9cc636ac4ca639a1278130d55, type: 3}
   IsStackeable: 1
-  Value: 80
+  Value: 91
+  Price: 76
   MinPrice: 40
   MaxPrice: 100
-  healthPoints: 40
+  HealthPoints: 50

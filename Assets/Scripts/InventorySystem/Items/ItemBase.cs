@@ -8,6 +8,8 @@ public class ItemBase : ScriptableObject
     public Sprite Image;
     public bool IsStackeable;
     public int Value;
+    public int Price;
     public int MinPrice;
     public int MaxPrice;
+
 }

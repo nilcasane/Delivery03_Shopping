@@ -16,7 +16,8 @@ MonoBehaviour:
   Description: Baya de forma cuadrada muy saciante
   Image: {fileID: -8124528061606188255, guid: 829cf6f9cc636ac4ca639a1278130d55, type: 3}
   IsStackeable: 1
-  Value: 30
+  Value: 38
+  Price: 43
   MinPrice: 25
   MaxPrice: 50
-  healthPoints: 25
+  HealthPoints: 25
